@@ -43,3 +43,5 @@ Another challenge was an indentation error caused by mixing tabs and spaces whil
 The AI assistant helped explain the errors instead of only giving me commands to copy. Once the environment was working, I was able to run the classifier, analyze the Grad-CAM heatmap, test the provided filters, and create my own vivid filter.
 
 This project helped me understand how AI can assist programmers with debugging, explaining code, and developing a solution step by step.
+
+https://github.com/Josh-CodeGoblin/AI_Ecosystem_Image/tree/main/Image_Classification_Example
