@@ -1,4 +1,4 @@
-from PIL import Image, ImageFilter, ImageDraw
+from PIL import Image, ImageFilter, ImageDraw, ImageEnhance
 import matplotlib.pyplot as plt
 import os
 import random
@@ -64,11 +64,38 @@ def apply_spaghetti_filter(image_path, output_path="spaghetti_monster.png", nood
 
     except Exception as e:
         print(f"Error processing image: {e}")
+	
+def apply_vivid_filter(image_path, output_path="vivid_image.jpg"):
+    try:
+        # Open the image and convert it to RGB
+        img = Image.open(image_path).convert("RGB")
 
+        # Resize the image
+        img_resized = img.resize((256, 256))
+
+        # Increase color intensity
+        color = ImageEnhance.Color(img_resized)
+        img_vivid = color.enhance(1.8)
+
+        # Increase contrast
+        contrast = ImageEnhance.Contrast(img_vivid)
+        img_vivid = contrast.enhance(1.5)
+
+        # Sharpen the image
+        sharpness = ImageEnhance.Sharpness(img_vivid)
+        img_vivid = sharpness.enhance(2.0)
+
+        # Save the finished image
+        img_vivid.save(output_path)
+
+        print(f"Vivid image saved as '{output_path}'.")
+
+    except Exception as e:
+        print(f"Error processing image: {e}")	
 
 if __name__ == "__main__":
-    print("Image Processor (type 'exit' to quit)\nAvailable filters: blur, spaghetti")
-    while True:
+    print("Image Processor (type 'exit' to quit)\nAvailable filters: blur, spaghetti, vivid")
+    while True:	
         image_path = input("Enter image filename (or 'exit' to quit): ").strip()
         if image_path.lower() == 'exit':
             print("Goodbye!")
@@ -78,14 +105,20 @@ if __name__ == "__main__":
             continue
 
         # choose filter
-        choice = input("Choose filter ('blur' or 'spaghetti'): ").strip().lower()
+        choice = input("Choose filter ('blur', 'spaghetti', or 'vivid'): ").strip().lower()
         base, ext = os.path.splitext(image_path)
 
         if choice == 'blur':
             output_file = f"{base}_blurred{ext}"
             apply_blur_filter(image_path, output_file)
+
         elif choice == 'spaghetti':
             output_file = f"{base}_spaghetti{ext}"
             apply_spaghetti_filter(image_path, output_file)
+
+        elif choice == 'vivid':
+            output_file = f"{base}_vivid{ext}"
+            apply_vivid_filter(image_path, output_file)
+
         else:
-            print("Unknown filter choice. Please select 'blur' or 'spaghetti'.")
+            print("Unknown filter choice. Please select 'blur', 'spaghetti', or 'vivid'.")
